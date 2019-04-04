@@ -26,12 +26,25 @@ class App extends Component {
     const counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
   };
-
   handleReset = () => {
     const Counters = this.state.counters.map(c => {
       c.value = 0;
       return c;
     });
+    this.setState({ Counters });
+  };
+  handleAdd = newCounter => {
+    if (this.state.counters.length != 0) {
+      const counters = this.state.counters.push({
+        id: this.state.counters[this.state.counters.length - 1].id + 1,
+        value: 0
+      });
+    } else {
+      const counters = this.state.counters.push({
+        id: 1,
+        value: 0
+      });
+    }
     this.setState({ Counters });
   };
   render() {
@@ -46,6 +59,7 @@ class App extends Component {
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
+            onAdd={this.handleAdd}
           />
         </main>
       </React.Fragment>
