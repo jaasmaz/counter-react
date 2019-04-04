@@ -1,56 +1,48 @@
 import React, { Component } from "react";
 class Counter extends Component {
-  // constructor() {
-  //   super();
-  //   this.handelIncrement = this.handelIncrement.bind(this);
+  // renderTags() {
+  //   if (this.state.tags.length === 0) return <p>There are no Tags!</p>;
+
+  //   return (
+  //     <ul>
+  //       {this.state.tags.map(tag => (
+  //         <li key={tag}>{tag}</li>
+  //       ))}
+  //     </ul> //Works like *ngFor for Rendering Lists
+  //   );
   // }
-
-  state = {
-    count: 0,
-    tags: ["tag1", "tag2", "tag3"]
-  };
-
-  renderTags() {
-    if (this.state.tags.length === 0) return <p>There are no Tags!</p>;
-
-    return (
-      <ul>
-        {this.state.tags.map(tag => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul> //Works like *ngFor for Rendering Lists
-    );
-  }
 
   getBadgeClasses() {
     var classes = "badge m-2 badge-";
-    classes += this.state.count > 0 ? "primary" : "warning";
+    classes += this.props.counter.value > 0 ? "primary" : "warning";
     return classes;
   }
 
-  formatCount() {
-    const { count } = this.state;
-    return count === 0 ? "Zero" : count;
+  formatValue() {
+    const { value } = this.props.counter;
+    return value === 0 ? "Zero" : value;
   }
 
-  handelIncrement = product => {
-    console.log(product);
-    this.setState({ count: this.state.count + 1 });
-  };
+  handelDelete;
 
   render() {
     return (
       <div>
-        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
+        <span className={this.getBadgeClasses()}>{this.formatValue()}</span>
         <button
-          onClick={() => this.handelIncrement({ id: 1 })}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-secondary btn-sm"
         >
           Increment
         </button>
+        <button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          className="btn btn-danger btn-sm m-2"
+        >
+          Delete
+        </button>
         <br />
-        {this.state.tags.length === 0 && "Please enter Tags !"}
-        {this.renderTags()}
+        {/* {this.state.tags.length === 0 && "Please enter Tags !"} */}
       </div>
     );
   }
